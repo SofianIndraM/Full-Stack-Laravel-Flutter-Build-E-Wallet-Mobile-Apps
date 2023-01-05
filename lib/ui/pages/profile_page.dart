@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:bank_sha/shared/theme.dart';
+import 'package:bank_sha/ui/widgets/button.dart';
+import 'package:bank_sha/ui/widgets/profile_menu_item.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -9,17 +11,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: lightBackgroundColor,
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: blackColor,
-        ),
-        elevation: 0,
-        backgroundColor: lightBackgroundColor,
-        centerTitle: true,
-        leading: Icon(
-          Icons.arrow_back_ios,
-        ),
         title: Text(
           'My Profile',
           style: blackTextStyle.copyWith(
@@ -35,7 +27,7 @@ class ProfilePage extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(
-              top: 40,
+              top: 20,
             ),
             padding: EdgeInsets.symmetric(
               horizontal: 30,
@@ -84,9 +76,60 @@ class ProfilePage extends StatelessWidget {
                     fontWeight: medium,
                     fontSize: 18,
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                ProfileMenuItem(
+                  imageUrl: 'assets/ic_edit_profile.png',
+                  title: 'Edit Profile',
+                  onTap: () async {
+                    if (await Navigator.pushNamed(context, '/pin') == true) {
+                      Navigator.pushNamed(context, '/profile-edit');
+                    }
+                  },
+                ),
+                ProfileMenuItem(
+                  imageUrl: 'assets/ic_pin.png',
+                  title: 'My PIN',
+                  onTap: () async {
+                    if (await Navigator.pushNamed(context, '/pin') == true) {
+                      Navigator.pushNamed(context, '/profile-edit-pin');
+                    }
+                  },
+                ),
+                ProfileMenuItem(
+                  imageUrl: 'assets/ic_wallet.png',
+                  title: 'Wallet Settings',
+                  onTap: () {},
+                ),
+                ProfileMenuItem(
+                  imageUrl: 'assets/ic_reward.png',
+                  title: 'My Rewards',
+                  onTap: () {},
+                ),
+                ProfileMenuItem(
+                  imageUrl: 'assets/ic_help.png',
+                  title: 'Help Center',
+                  onTap: () {},
+                ),
+                ProfileMenuItem(
+                  imageUrl: 'assets/ic_logout.png',
+                  title: 'Log Out',
+                  onTap: () {},
+                ),
               ],
             ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          CustomTextButton(
+            title: 'Report a Problem',
+            onPressed: () {},
+          ),
+          SizedBox(
+            height: 50,
           )
         ],
       ),

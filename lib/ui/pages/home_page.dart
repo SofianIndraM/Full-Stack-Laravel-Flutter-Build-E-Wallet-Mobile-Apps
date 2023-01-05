@@ -203,6 +203,9 @@ class HomePage extends StatelessWidget {
                 HomeServiceItem(
                   iconUrl: 'assets/ic_topup.png',
                   title: 'Top Up',
+                  onTap: () {
+                    Navigator.pushNamed(context, '/topup');
+                  },
                 ),
                 HomeServiceItem(
                   iconUrl: 'assets/ic_send.png',
@@ -384,7 +387,6 @@ class HomePage extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: lightBackgroundColor,
       bottomNavigationBar: BottomAppBar(
         color: whiteColor,
         shape: CircularNotchedRectangle(),
