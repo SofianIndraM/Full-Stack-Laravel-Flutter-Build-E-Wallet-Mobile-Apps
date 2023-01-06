@@ -19,9 +19,6 @@ class HomeServiceItem extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(
-              top: 14,
-            ),
             padding: EdgeInsets.all(22),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),

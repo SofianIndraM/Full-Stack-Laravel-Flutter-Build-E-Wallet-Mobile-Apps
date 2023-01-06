@@ -1,3 +1,4 @@
+import 'package:bank_sha/shared/shared_methods.dart';
 import 'package:bank_sha/shared/theme.dart';
 import 'package:bank_sha/ui/widgets/home_latest_transaction_item.dart';
 import 'package:bank_sha/ui/widgets/home_service_item.dart';
@@ -122,7 +123,7 @@ class HomePage extends StatelessWidget {
               style: whiteTextStyle,
             ),
             Text(
-              'Rp 12.500',
+              formatCurrency(52500),
               style: whiteTextStyle.copyWith(
                 fontWeight: semiBold,
                 fontSize: 24,
@@ -161,7 +162,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'of Rp 20.000',
+                  'of ${formatCurrency(50000)}',
                   style: blackTextStyle.copyWith(
                     fontWeight: semiBold,
                   ),
@@ -197,6 +198,9 @@ class HomePage extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
+            SizedBox(
+              height: 14,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -210,6 +214,9 @@ class HomePage extends StatelessWidget {
                 HomeServiceItem(
                   iconUrl: 'assets/ic_send.png',
                   title: 'Send',
+                  onTap: () {
+                    Navigator.pushNamed(context, '/transfer');
+                  },
                 ),
                 HomeServiceItem(
                   iconUrl: 'assets/ic_withdraw.png',
@@ -218,6 +225,12 @@ class HomePage extends StatelessWidget {
                 HomeServiceItem(
                   iconUrl: 'assets/ic_more.png',
                   title: 'More',
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => MoreDialog(),
+                    );
+                  },
                 ),
               ],
             )
@@ -256,31 +269,31 @@ class HomePage extends StatelessWidget {
                     iconUrl: 'assets/ic_transaction_cat1.png',
                     title: 'Top Up',
                     time: 'Yesterday',
-                    value: '+ 450.000',
+                    value: '+ ${formatCurrency(450000, symbol: '')}',
                   ),
                   HomeLatestServiceItem(
                     iconUrl: 'assets/ic_transaction_cat2.png',
                     title: 'Cashback',
                     time: 'Sep 11',
-                    value: '+ 22.000',
+                    value: '+ ${formatCurrency(22000, symbol: '')}',
                   ),
                   HomeLatestServiceItem(
                     iconUrl: 'assets/ic_transaction_cat3.png',
                     title: 'Withdraw',
                     time: 'Sep 2',
-                    value: '- 5.000',
+                    value: '- ${formatCurrency(5000, symbol: '')}',
                   ),
                   HomeLatestServiceItem(
                     iconUrl: 'assets/ic_transaction_cat4.png',
                     title: 'Transfer',
                     time: 'Aug 27',
-                    value: '- 123.500',
+                    value: '- ${formatCurrency(123500, symbol: '')}',
                   ),
                   HomeLatestServiceItem(
                     iconUrl: 'assets/ic_transaction_cat5.png',
                     title: 'Electric',
                     time: 'Feb 18',
-                    value: '- 12.300.000',
+                    value: '- ${formatCurrency(12300000, symbol: '')}',
                   ),
                 ],
               ),
@@ -464,6 +477,81 @@ class HomePage extends StatelessWidget {
             buildLatesTransactions(),
             buildSendAgain(),
             buildFriendlyTips(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MoreDialog extends StatelessWidget {
+  const MoreDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Colors.transparent,
+      insetPadding: EdgeInsets.zero,
+      alignment: Alignment.bottomCenter,
+      content: Container(
+        padding: EdgeInsets.all(30),
+        height: 326,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: lightBackgroundColor,
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Do More With Us',
+              style: blackTextStyle.copyWith(
+                fontWeight: semiBold,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(
+              height: 13,
+            ),
+            Wrap(
+              spacing: 29,
+              runSpacing: 25,
+              children: [
+                HomeServiceItem(
+                  iconUrl: 'assets/ic_product_data.png',
+                  title: 'Data',
+                  onTap: () {
+                    Navigator.pushNamed(context, '/data-provider');
+                  },
+                ),
+                HomeServiceItem(
+                  iconUrl: 'assets/ic_product_water.png',
+                  title: 'Water',
+                  onTap: () {},
+                ),
+                HomeServiceItem(
+                  iconUrl: 'assets/ic_product_stream.png',
+                  title: 'Stream',
+                  onTap: () {},
+                ),
+                HomeServiceItem(
+                  iconUrl: 'assets/ic_product_movie.png',
+                  title: 'Movie',
+                  onTap: () {},
+                ),
+                HomeServiceItem(
+                  iconUrl: 'assets/ic_product_food.png',
+                  title: 'Food',
+                  onTap: () {},
+                ),
+                HomeServiceItem(
+                  iconUrl: 'assets/ic_product_travel.png',
+                  title: 'Travel',
+                  onTap: () {},
+                ),
+              ],
+            )
           ],
         ),
       ),

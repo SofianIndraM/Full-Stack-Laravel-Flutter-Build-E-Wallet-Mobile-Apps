@@ -6,11 +6,13 @@ class CustomFormFilled extends StatelessWidget {
   final String title;
   final bool obscureText;
   final TextEditingController? controller;
+  final bool isShowTitle;
   const CustomFormFilled({
     super.key,
     required this.title,
     this.obscureText = false,
     this.controller,
+    this.isShowTitle = true,
   });
 
   @override
@@ -18,19 +20,22 @@ class CustomFormFilled extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: blackTextStyle.copyWith(
-            fontWeight: medium,
+        if (isShowTitle)
+          Text(
+            title,
+            style: blackTextStyle.copyWith(
+              fontWeight: medium,
+            ),
           ),
-        ),
-        SizedBox(
-          height: 8,
-        ),
+        if (isShowTitle)
+          SizedBox(
+            height: 8,
+          ),
         TextFormField(
           controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(
+            hintText: !isShowTitle ? title : null,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
             ),
