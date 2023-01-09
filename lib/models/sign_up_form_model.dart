@@ -1,5 +1,3 @@
-import 'dart:math';
-
 class SignUpFormModel {
   final String? name;
   final String? email;
@@ -31,7 +29,7 @@ class SignUpFormModel {
   SignUpFormModel copyWith({
     String? ktp,
     String? pin,
-    String? profile_picture,
+    String? profilePicture,
   }) =>
       SignUpFormModel(
         name: name,

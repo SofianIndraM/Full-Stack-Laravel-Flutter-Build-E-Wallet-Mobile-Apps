@@ -14,3 +14,25 @@ class AuthCheckEmail extends AuthEvent {
   @override
   List<Object> get props => [email];
 }
+
+class AuthRegister extends AuthEvent {
+  final SignUpFormModel data;
+  AuthRegister(
+    this.data,
+  );
+
+  @override
+  List<Object> get props => [data];
+}
+
+class AuthLogin extends AuthEvent {
+  final SignInFormModel data;
+  AuthLogin(
+    this.data,
+  );
+
+  @override
+  List<Object> get props => [data];
+}
+
+class AuthGetCurrentUser extends AuthEvent {}
