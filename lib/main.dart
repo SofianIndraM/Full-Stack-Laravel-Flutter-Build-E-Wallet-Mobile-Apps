@@ -1,4 +1,5 @@
-import 'package:bank_sha/blocs/bloc/auth_bloc.dart';
+import 'package:bank_sha/blocs/payment_method/payment_method_bloc.dart';
+import 'package:bank_sha/blocs/user/user_bloc.dart';
 import 'package:bank_sha/shared/theme.dart';
 import 'package:bank_sha/ui/pages/data_package_page.dart';
 import 'package:bank_sha/ui/pages/data_provider_page.dart';
@@ -11,12 +12,9 @@ import 'package:bank_sha/ui/pages/profile_edit_pin_page.dart';
 import 'package:bank_sha/ui/pages/profile_edit_success_page.dart';
 import 'package:bank_sha/ui/pages/profile_page.dart';
 import 'package:bank_sha/ui/pages/sign-up-success.dart';
-import 'package:bank_sha/ui/pages/sign-up_set_profile_page.dart';
 import 'package:bank_sha/ui/pages/sign_in_page.dart';
 import 'package:bank_sha/ui/pages/sign_up_page.dart';
-import 'package:bank_sha/ui/pages/sign_up_set_ktp_page.dart';
 import 'package:bank_sha/ui/pages/splash_page.dart';
-import 'package:bank_sha/ui/pages/topup_amount_page.dart';
 import 'package:bank_sha/ui/pages/topup_page.dart';
 import 'package:bank_sha/ui/pages/topup_success_page.dart';
 import 'package:bank_sha/ui/pages/transfer_amount_page.dart';
@@ -24,6 +22,8 @@ import 'package:bank_sha/ui/pages/transfer_page.dart';
 import 'package:bank_sha/ui/pages/transfer_success_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'blocs/auth/auth_bloc.dart';
 
 void main() => runApp(const MyApp());
 
@@ -36,7 +36,10 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => AuthBloc()..add(AuthGetCurrentUser()),
-        )
+        ),
+        BlocProvider(
+          create: (context) => UserBloc(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -68,10 +71,8 @@ class MyApp extends StatelessWidget {
           '/profile-edit-pin': (context) => ProfileEditPinPage(),
           '/profile-edit-success': (context) => ProfileEditSuccessPage(),
           '/topup': (context) => TopupPage(),
-          '/topup-amount': (context) => TopupAmountPage(),
           '/topup-success': (context) => TopupSuccessPage(),
           '/transfer': (context) => TransferPage(),
-          '/transfer-amount': (context) => TransferAmountPage(),
           '/transfer-success': (context) => TransferSuccessPage(),
           '/data-provider': (context) => DataProviderPage(),
           '/data-package': (context) => DataPackagePage(),

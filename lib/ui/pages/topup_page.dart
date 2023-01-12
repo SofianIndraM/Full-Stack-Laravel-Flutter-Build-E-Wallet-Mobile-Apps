@@ -1,10 +1,24 @@
+import 'package:bank_sha/models/payment_method_model.dart';
+import 'package:bank_sha/models/topup_form_model.dart';
 import 'package:bank_sha/shared/theme.dart';
+import 'package:bank_sha/ui/pages/topup_amount_page.dart';
 import 'package:bank_sha/ui/widgets/bank_item.dart';
 import 'package:bank_sha/ui/widgets/button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TopupPage extends StatelessWidget {
+import '../../blocs/auth/auth_bloc.dart';
+import '../../blocs/payment_method/payment_method_bloc.dart';
+
+class TopupPage extends StatefulWidget {
   const TopupPage({super.key});
+
+  @override
+  State<TopupPage> createState() => _TopupPageState();
+}
+
+class _TopupPageState extends State<TopupPage> {
+  PaymentMethodModel? selectedPaymentMethod;
 
   @override
   Widget build(BuildContext context) {
@@ -32,38 +46,46 @@ class TopupPage extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Row(
-            children: [
-              Image.asset(
-                'assets/img_bg_card.png',
-                height: 55,
-                width: 80,
-              ),
-              SizedBox(
-                width: 16,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '8008 2208 1996',
-                    style: blackTextStyle.copyWith(
-                      fontWeight: medium,
-                      fontSize: 16,
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              if (state is AuthSuccess) {
+                return Row(
+                  children: [
+                    Image.asset(
+                      'assets/img_bg_card.png',
+                      height: 55,
+                      width: 80,
                     ),
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    'Angga Risky',
-                    style: greyTextStyle.copyWith(
-                      fontSize: 12,
+                    SizedBox(
+                      width: 16,
                     ),
-                  )
-                ],
-              )
-            ],
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          state.user.cardNumber!.replaceAllMapped(
+                              RegExp(r".{4}"), (match) => '${match.group(0)} '),
+                          style: blackTextStyle.copyWith(
+                            fontWeight: medium,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 2,
+                        ),
+                        Text(
+                          state.user.name!,
+                          style: greyTextStyle.copyWith(
+                            fontSize: 12,
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                );
+              }
+              return Container();
+            },
           ),
           SizedBox(
             height: 40,
@@ -78,37 +100,60 @@ class TopupPage extends StatelessWidget {
           SizedBox(
             height: 14,
           ),
-          BankItem(
-            imageUrl: 'assets/img_bank_bca.png',
-            title: 'BANK BCA',
-            isSelected: true,
-          ),
-          BankItem(
-            imageUrl: 'assets/img_bank_bni.png',
-            title: 'BANK BNI',
-          ),
-          BankItem(
-            imageUrl: 'assets/img_bank_mandiri.png',
-            title: 'BANK Mandiri',
-          ),
-          BankItem(
-            imageUrl: 'assets/img_bank_ocbc.png',
-            title: 'BANK OCBC',
+          BlocProvider(
+            create: (context) => PaymentMethodBloc()..add(PaymentMethodGet()),
+            child: BlocBuilder<PaymentMethodBloc, PaymentMethodState>(
+              builder: (context, state) {
+                if (state is PaymentMethodSuccess) {
+                  return Column(
+                    children: state.paymentMethods.map((paymentMethod) {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedPaymentMethod = paymentMethod;
+                          });
+                        },
+                        child: BankItem(
+                          paymentMethod: paymentMethod,
+                          isSelected:
+                              paymentMethod.id == selectedPaymentMethod?.id,
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
           ),
           SizedBox(
             height: 30,
           ),
-          CustomFilledButton(
-            title: 'Continue',
-            onPressed: () {
-              Navigator.pushNamed(context, '/topup-amount');
-            },
-          ),
-          SizedBox(
-            height: 57,
-          )
         ],
       ),
+      floatingActionButton: (selectedPaymentMethod != null)
+          ? Padding(
+              padding: const EdgeInsets.all(24),
+              child: CustomFilledButton(
+                title: 'Continue',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TopupAmountPage(
+                        data: TopupFormModel(
+                          paymentMethodCode: selectedPaymentMethod?.code,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          : Container(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

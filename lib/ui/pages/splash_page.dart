@@ -5,7 +5,7 @@ import 'package:bank_sha/ui/pages/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/bloc/auth_bloc.dart';
+import '../../blocs/auth/auth_bloc.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});

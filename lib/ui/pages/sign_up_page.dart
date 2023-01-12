@@ -1,10 +1,10 @@
-import 'package:bank_sha/blocs/bloc/auth_bloc.dart';
 import 'package:bank_sha/models/sign_up_form_model.dart';
 import 'package:bank_sha/shared/shared_methods.dart';
 import 'package:bank_sha/ui/pages/sign-up_set_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/auth/auth_bloc.dart';
 import '../../shared/theme.dart';
 import '../widgets/button.dart';
 import '../widgets/forms.dart';

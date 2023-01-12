@@ -1,9 +1,10 @@
-import 'package:bank_sha/blocs/bloc/auth_bloc.dart';
 import 'package:bank_sha/shared/shared_methods.dart';
 import 'package:bank_sha/shared/theme.dart';
 import 'package:bank_sha/ui/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../blocs/auth/auth_bloc.dart';
 
 class PinPage extends StatefulWidget {
   const PinPage({super.key});
