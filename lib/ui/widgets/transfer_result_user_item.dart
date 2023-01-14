@@ -73,6 +73,7 @@ class TransferResultUserItem extends StatelessWidget {
             style: blackTextStyle.copyWith(
               fontWeight: medium,
               fontSize: 16,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           SizedBox(

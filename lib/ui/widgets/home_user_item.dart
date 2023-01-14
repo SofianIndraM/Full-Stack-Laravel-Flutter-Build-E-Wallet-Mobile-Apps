@@ -1,13 +1,12 @@
+import 'package:bank_sha/models/user_model.dart';
 import 'package:bank_sha/shared/theme.dart';
 import 'package:flutter/material.dart';
 
 class HomeUserItem extends StatelessWidget {
-  final String imageUrl;
-  final String username;
+  final UserModel user;
   const HomeUserItem({
     super.key,
-    required this.imageUrl,
-    required this.username,
+    required this.user,
   });
 
   @override
@@ -31,9 +30,12 @@ class HomeUserItem extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: AssetImage(
-                  imageUrl,
-                ),
+                fit: BoxFit.cover,
+                image: user.profilePicture == null
+                    ? AssetImage(
+                        'assets/img_bg_card.png',
+                      )
+                    : NetworkImage(user.profilePicture!) as ImageProvider,
               ),
             ),
           ),
@@ -41,11 +43,13 @@ class HomeUserItem extends StatelessWidget {
             height: 13,
           ),
           Text(
-            '@$username',
+            '@${user.username}',
             style: blackTextStyle.copyWith(
               fontWeight: medium,
               fontSize: 12,
             ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           )
         ],
       ),

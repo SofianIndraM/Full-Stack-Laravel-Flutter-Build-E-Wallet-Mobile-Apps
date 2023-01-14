@@ -1,21 +1,24 @@
-class PaymentMethodModel {
+class TransactionTypeModel {
   final int? id;
   final String? name;
   final String? code;
   final String? thumbnail;
+  final String? action;
 
-  PaymentMethodModel({
+  TransactionTypeModel({
     this.id,
     this.code,
     this.name,
     this.thumbnail,
+    this.action,
   });
 
-  factory PaymentMethodModel.fromJson(Map<String, dynamic> json) =>
-      PaymentMethodModel(
+  factory TransactionTypeModel.fromJson(Map<String, dynamic> json) =>
+      TransactionTypeModel(
         id: json['id'],
         name: json['name'],
         code: json['code'],
         thumbnail: json['thumbnail'],
+        action: json['action'],
       );
 }
